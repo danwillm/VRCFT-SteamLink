@@ -1,0 +1,15 @@
+{
+  "ModuleId": "b146eda9-be48-4016-ab63-680a694064bd",
+  "LastUpdated": "2023-08-07T15:41:01Z",
+  "Version": "1.0.0",
+  "Downloads": 0,
+  "Ratings": 0,
+  "Rating": 0,
+  "AuthorName": "danwillm",
+  "ModuleName": "SteamLink VRCFT",
+  "ModuleDescription": "VRCFT for SteamLink",
+  "UsageInstructions": "Launch SteamVR!",
+  "DownloadUrl": "https://github.com/danwillm/SL-VRCFT/releases/latest/download/SLExtTrackingModule.zip",
+  "ModulePageUrl": "https://github.com/danwillm/SL-VRCFT",
+  "DllFileName": "SLExtTrackingModule.dll"
+}

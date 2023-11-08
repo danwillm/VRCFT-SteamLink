@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\VRCFaceTracking\VRCFaceTracking.Core\VRCFaceTracking.Core.csproj" />
+    <ProjectReference Include="..\SLOSCParser\SLOSCParser.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /s $(SolutionDir)x64\$(Configuration)\ $(ProjectDir)bin\$(Configuration)\$(TargetFramework) /Y&#xD;&#xA;xcopy /s $(SolutionDir)res $(ProjectDir)bin\$(Configuration)\$(TargetFramework) /Y&#xD;&#xA;xcopy /s $(ProjectDir)bin\$(Configuration)\$(TargetFramework) %25AppData%25\VRCFaceTracking\CustomLibs\b146eda9-be48-4016-ab63-680a694064bd /Y /I" />
+  </Target>
+
+</Project>
