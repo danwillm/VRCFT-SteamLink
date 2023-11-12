@@ -105,6 +105,7 @@ namespace SLExtTrackingModule
 
         SLOSCPacket _currentPacket = new SLOSCPacket();
 
+        //based on https://docs.google.com/spreadsheets/d/118jo960co3Mgw8eREFVBsaJ7z0GtKNr52IB4Bz99VTA/edit#gid=0
         private static readonly Dictionary<XrFBWeights, List<UnifiedExpressions>> mapDirectXRFBUnifiedExpressions = new Dictionary<XrFBWeights, List<UnifiedExpressions>>
             {
                 {UpperLidRaiserL, new List<UnifiedExpressions>{EyeWideLeft}},
@@ -117,13 +118,22 @@ namespace SLExtTrackingModule
                 {OuterBrowRaiserR, new List<UnifiedExpressions>{BrowOuterUpRight}},
                 {BrowLowererL, new List<UnifiedExpressions>{BrowPinchLeft, BrowLowererLeft}},
                 {BrowLowererR, new List<UnifiedExpressions>{BrowPinchRight, BrowLowererRight}},
+
                 {JawDrop, new List<UnifiedExpressions>{JawOpen}},
                 {JawSidewaysLeft, new List<UnifiedExpressions>{JawLeft}},
                 {JawSidewaysRight, new List<UnifiedExpressions>{JawRight}},
                 {JawThrust, new List<UnifiedExpressions>{JawForward}},
-                {LipsToward, new List<UnifiedExpressions>{MouthClosed}},
+                
                 {MouthLeft, new List<UnifiedExpressions>{MouthLowerLeft, MouthUpperLeft}},
                 {MouthRight, new List<UnifiedExpressions>{MouthLowerRight, MouthUpperRight}},
+                
+                {ChinRaiserT, new List<UnifiedExpressions>{MouthRaiserUpper} },
+                {ChinRaiserB, new List<UnifiedExpressions>{MouthRaiserLower} },
+                
+                {DimplerL, new List<UnifiedExpressions>{MouthDimpleLeft} },
+                {DimplerR, new List<UnifiedExpressions>{MouthDimpleRight} },
+
+                {LipsToward, new List<UnifiedExpressions>{MouthClosed}},
                 {LipCornerPullerL, new List<UnifiedExpressions>{ MouthCornerPullLeft, MouthCornerSlantLeft} },
                 {LipCornerPullerR, new List<UnifiedExpressions>{ MouthCornerPullRight, MouthCornerSlantRight} },
                 {LipCornerDepressoL, new List<UnifiedExpressions>{ MouthFrownLeft} },
@@ -132,17 +142,12 @@ namespace SLExtTrackingModule
                 {LowerLipDepressorR, new List<UnifiedExpressions>{ MouthLowerDownRight} },
                 {UpperLipRaiserL, new List<UnifiedExpressions>{ MouthUpperUpLeft} }, //something odd here
                 {UpperLipRaiserR, new List<UnifiedExpressions>{ MouthUpperUpRight } }, //something odd here
-                {ChinRaiserT, new List<UnifiedExpressions>{MouthRaiserUpper} },
-                {ChinRaiserB, new List<UnifiedExpressions>{MouthRaiserLower} },
-                {DimplerL, new List<UnifiedExpressions>{MouthDimpleLeft} },
-                {DimplerR, new List<UnifiedExpressions>{MouthDimpleRight} },
                 {LipTightenerL, new List<UnifiedExpressions>{MouthTightenerLeft} },
                 {LipTightenerR, new List<UnifiedExpressions>{MouthTightenerRight} },
                 {LipPressorL, new List<UnifiedExpressions>{MouthPressLeft} },
                 {LipPressorR, new List<UnifiedExpressions>{MouthPressRight} },
                 {LipStretcherL, new List<UnifiedExpressions>{MouthStretchLeft} },
                 {LipStretcherR, new List<UnifiedExpressions>{MouthStretchRight} },
-
                 {LipPuckerL, new List<UnifiedExpressions>{ LipPuckerLowerLeft, LipPuckerUpperLeft } },
                 {LipPuckerR, new List<UnifiedExpressions>{ LipPuckerLowerRight, LipPuckerUpperRight } },
                 {LipFunnelerLB, new List<UnifiedExpressions>{LipFunnelLowerLeft} },
