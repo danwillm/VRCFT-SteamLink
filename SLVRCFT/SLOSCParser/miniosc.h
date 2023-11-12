@@ -167,8 +167,8 @@ miniosc * minioscInit( unsigned short portin, unsigned short portout, const char
 
 		// Allow address reuse. Depending on OS, we may or may not get a message.
 		// Consider this.
-		int opt = 1;
-		setsockopt( sock, SOL_SOCKET, SO_REUSEADDR, ( const char * ) &opt, sizeof( opt ) );
+		//int opt = 1;
+		//setsockopt( sock, SOL_SOCKET, SO_REUSEADDR, ( const char * ) &opt, sizeof( opt ) );
 
 		// Bind the socket with the server address 
 		if ( bind( sock, ( const struct sockaddr * )&bindaddy, sizeof( bindaddy ) ) < 0 )

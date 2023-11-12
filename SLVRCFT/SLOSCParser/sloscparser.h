@@ -68,6 +68,7 @@ enum EXrFBWeights {
 };
 
 struct SLOSCPacket {
+	float vEyeGazePoint[3];
 	float vWeights[XR_FB_WEIGHTS_MAX];
 };
 

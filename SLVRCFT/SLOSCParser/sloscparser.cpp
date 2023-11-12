@@ -85,6 +85,12 @@ static const std::map<std::string, EXrFBWeights> mapXrFBWeightStrings{
 	{"/sl/xrfb/facew/UpperLipRaiserR", UpperLipRaiserR },
 };
 
+static const std::map<std::string, int> mapEyeGazePointIndex{ {
+	{"/sl/eyeTrackedGazePoint/x", 0 },
+	{"/sl/eyeTrackedGazePoint/y", 1 },
+	{"/sl/eyeTrackedGazePoint/z", 2 },
+} };
+
 static miniosc* osc = nullptr;
 
 bool bHasNewData = false;
@@ -98,8 +104,9 @@ extern "C" __declspec(dllexport) int SLOSCInit(const char* sAddress, const int n
 #endif
 
 	std::cout << "Address: " << std::string(sAddress) << std::endl;
+	std::cout << "In Port: " << nInPort << " Out Port: " << nOutPort << std::endl;
 
-	int nOscErr;
+	int nOscErr = 0;
 	osc = minioscInit(nInPort, nOutPort, sAddress, &nOscErr);
 
 	if (nOscErr != 0) {
@@ -110,18 +117,33 @@ extern "C" __declspec(dllexport) int SLOSCInit(const char* sAddress, const int n
 	return SLOSC_SUCCESS;
 }
 
-void rxcb(const char* sAddress, const char* sType, const void** ppParmaters) {
-	auto weightStringIt = mapXrFBWeightStrings.find(sAddress);
-	if (weightStringIt != mapXrFBWeightStrings.end()) {
-		nextPacket.vWeights[mapXrFBWeightStrings.at(sAddress)] = *((float*)ppParmaters[0]); //assume float
+void rxcb(const char* cpAddress, const char* sType, const void** ppParmaters) {
+	std::string sAddress(cpAddress);
+	{
+		auto itWeightString = mapXrFBWeightStrings.find(sAddress);
+		if (itWeightString != mapXrFBWeightStrings.end()) {
+			nextPacket.vWeights[itWeightString->second] = *((float*)ppParmaters[0]); //assume float
 
-		bHasNewData = true;
+			bHasNewData = true;
+
+			return;
+		}
+	}
+
+	{
+		auto itEyeGazePoint = mapEyeGazePointIndex.find(sAddress);
+		if (itEyeGazePoint != mapEyeGazePointIndex.end()) {
+			nextPacket.vWeights[itEyeGazePoint->second] = *((float*)ppParmaters[0]); //assume float
+
+			bHasNewData = true;
+
+			return;
+		}
 	}
 }
 
 extern "C" __declspec(dllexport) int SLOSCPollNext(SLOSCPacket * outSLOSCPacket) {
 	int r = minioscPoll(osc, 10, rxcb);
-
 	if (!bHasNewData) {
 		return SLOSC_ERROR_NO_NEW_PACKET;
 	}

@@ -80,6 +80,7 @@ namespace SLExtTrackingModule
 
     unsafe struct SLOSCPacket
     {
+        public fixed float vEyeGazePoint[3];
         public fixed float vWeights[(int)XrFBWeights.XR_FB_WEIGHTS_MAX];
     }
 
