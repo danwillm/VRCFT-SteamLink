@@ -33,14 +33,14 @@ namespace SLExtTrackingModule
 
         private static float CalculateEyeOpenness(float fEyeClosedWeight, float fEyeTightener)
         {
-            return Math.Clamp(fEyeClosedWeight + fEyeClosedWeight * fEyeTightener, 0.0f, 1.0f);
+            return 1.0f - Math.Clamp(fEyeClosedWeight + fEyeClosedWeight * fEyeTightener, 0.0f, 1.0f);
         }
 
         private static unsafe void UpdateEyeTracking(ref SLOSCPacket packet)
         {
             {
                 float fAngleX = MathF.Atan2(packet.vEyeGazePoint[0], -packet.vEyeGazePoint[2]);
-                float fAngleY = -MathF.Atan2(packet.vEyeGazePoint[1], -packet.vEyeGazePoint[2]);
+                float fAngleY = MathF.Atan2(packet.vEyeGazePoint[1], -packet.vEyeGazePoint[2]);
 
                 float fNmAngleX = fAngleX / (MathF.PI / 2.0f) * 2.0f;
                 float fNmAngleY = fAngleY / (MathF.PI / 2.0f) * 2.0f;
@@ -72,7 +72,7 @@ namespace SLExtTrackingModule
         }
         private static unsafe void UpdateFaceTracking(ref SLOSCPacket packet)
         {
-            foreach (KeyValuePair<XrFBWeights, List<UnifiedExpressions>> entry in dictFBWeightsUnifiedExpressions)
+            foreach (KeyValuePair<XrFBWeights, List<UnifiedExpressions>> entry in mapDirectXRFBUnifiedExpressions)
             {
                 int nWeightIndex = (int)entry.Key;
                 foreach (UnifiedExpressions unifiedExpression in entry.Value)
@@ -84,8 +84,6 @@ namespace SLExtTrackingModule
 
         public override void Update()
         {
-            Thread.Sleep(10);
-
             int nSLOSCPollErr = SLOSC.PollNext(ref _currentPacket);
             if (nSLOSCPollErr != 0)
             {
@@ -107,7 +105,7 @@ namespace SLExtTrackingModule
 
         SLOSCPacket _currentPacket = new SLOSCPacket();
 
-        private static readonly Dictionary<XrFBWeights, List<UnifiedExpressions>> dictFBWeightsUnifiedExpressions = new Dictionary<XrFBWeights, List<UnifiedExpressions>>
+        private static readonly Dictionary<XrFBWeights, List<UnifiedExpressions>> mapDirectXRFBUnifiedExpressions = new Dictionary<XrFBWeights, List<UnifiedExpressions>>
             {
                 {UpperLidRaiserL, new List<UnifiedExpressions>{EyeWideLeft}},
                 {UpperLidRaiserR, new List<UnifiedExpressions>{EyeWideRight}},
@@ -126,6 +124,45 @@ namespace SLExtTrackingModule
                 {LipsToward, new List<UnifiedExpressions>{MouthClosed}},
                 {MouthLeft, new List<UnifiedExpressions>{MouthLowerLeft, MouthUpperLeft}},
                 {MouthRight, new List<UnifiedExpressions>{MouthLowerRight, MouthUpperRight}},
+                {LipCornerPullerL, new List<UnifiedExpressions>{ MouthCornerPullLeft, MouthCornerSlantLeft} },
+                {LipCornerPullerR, new List<UnifiedExpressions>{ MouthCornerPullRight, MouthCornerSlantRight} },
+                {LipCornerDepressoL, new List<UnifiedExpressions>{ MouthFrownLeft} },
+                {LipCornerDepressoR, new List<UnifiedExpressions>{ MouthFrownRight} },
+                {LowerLipDepressorL, new List<UnifiedExpressions>{ MouthLowerDownLeft} },
+                {LowerLipDepressorR, new List<UnifiedExpressions>{ MouthLowerDownRight} },
+                {UpperLipRaiserL, new List<UnifiedExpressions>{ MouthUpperUpLeft} }, //something odd here
+                {UpperLipRaiserR, new List<UnifiedExpressions>{ MouthUpperUpRight } }, //something odd here
+                {ChinRaiserT, new List<UnifiedExpressions>{MouthRaiserUpper} },
+                {ChinRaiserB, new List<UnifiedExpressions>{MouthRaiserLower} },
+                {DimplerL, new List<UnifiedExpressions>{MouthDimpleLeft} },
+                {DimplerR, new List<UnifiedExpressions>{MouthDimpleRight} },
+                {LipTightenerL, new List<UnifiedExpressions>{MouthTightenerLeft} },
+                {LipTightenerR, new List<UnifiedExpressions>{MouthTightenerRight} },
+                {LipPressorL, new List<UnifiedExpressions>{MouthPressLeft} },
+                {LipPressorR, new List<UnifiedExpressions>{MouthPressRight} },
+                {LipStretcherL, new List<UnifiedExpressions>{MouthStretchLeft} },
+                {LipStretcherR, new List<UnifiedExpressions>{MouthStretchRight} },
+
+                {LipPuckerL, new List<UnifiedExpressions>{ LipPuckerLowerLeft, LipPuckerUpperLeft } },
+                {LipPuckerR, new List<UnifiedExpressions>{ LipPuckerLowerRight, LipPuckerUpperRight } },
+                {LipFunnelerLB, new List<UnifiedExpressions>{LipFunnelLowerLeft} },
+                {LipFunnelerLT, new List<UnifiedExpressions>{LipFunnelUpperLeft} },
+                {LipFunnelerRB, new List<UnifiedExpressions>{LipFunnelLowerRight} },
+                {LipFunnelerRT, new List<UnifiedExpressions>{LipFunnelUpperRight} },
+                {LipSuckLB, new List<UnifiedExpressions>{LipSuckLowerLeft} },
+                {LipSuckLT, new List<UnifiedExpressions>{LipSuckUpperLeft} },
+                {LipSuckRB, new List<UnifiedExpressions>{LipSuckLowerRight} },
+                {LipSuckRT, new List<UnifiedExpressions>{LipSuckUpperLeft} },
+
+                {CheekPuffL, new List<UnifiedExpressions>{CheekPuffLeft} },
+                {CheekPuffR, new List<UnifiedExpressions>{CheekPuffRight} },
+                {CheekSuckL, new List<UnifiedExpressions>{CheekSuckLeft} },
+                {CheekSuckR, new List<UnifiedExpressions>{CheekSuckRight} },
+                {CheekRaiserL, new List<UnifiedExpressions>{CheekSquintLeft} },
+                {CheekRaiserR, new List<UnifiedExpressions>{CheekSquintRight} },
+
+                {NoseWrinklerL, new List<UnifiedExpressions>{NoseSneerLeft} },
+                {NoseWrinklerR, new List<UnifiedExpressions>{NoseSneerRight} },
             };
     }
 }

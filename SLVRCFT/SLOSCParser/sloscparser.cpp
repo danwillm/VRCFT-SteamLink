@@ -85,12 +85,6 @@ static const std::map<std::string, EXrFBWeights> mapXrFBWeightStrings{
 	{"/sl/xrfb/facew/UpperLipRaiserR", UpperLipRaiserR },
 };
 
-static const std::map<std::string, int> mapEyeGazePointIndex{ {
-	{"/sl/eyeTrackedGazePoint/x", 0 },
-	{"/sl/eyeTrackedGazePoint/y", 1 },
-	{"/sl/eyeTrackedGazePoint/z", 2 },
-} };
-
 static miniosc* osc = nullptr;
 
 bool bHasNewData = false;
@@ -130,15 +124,12 @@ void rxcb(const char* cpAddress, const char* sType, const void** ppParmaters) {
 		}
 	}
 
-	{
-		auto itEyeGazePoint = mapEyeGazePointIndex.find(sAddress);
-		if (itEyeGazePoint != mapEyeGazePointIndex.end()) {
-			nextPacket.vWeights[itEyeGazePoint->second] = *((float*)ppParmaters[0]); //assume float
+	if (sAddress == "/sl/eyeTrackedGazePoint") {
+		memcpy(&nextPacket.vEyeGazePoint, (float*)ppParmaters[0], sizeof(float) * 3);
 
-			bHasNewData = true;
+		bHasNewData = true;
 
-			return;
-		}
+		return;
 	}
 }
 
