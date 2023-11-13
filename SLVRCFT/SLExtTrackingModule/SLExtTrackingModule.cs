@@ -84,6 +84,8 @@ namespace SLExtTrackingModule
 
         public override void Update()
         {
+            Thread.Sleep(2);
+
             int nSLOSCPollErr = SLOSC.PollNext(ref _currentPacket);
             if (nSLOSCPollErr != 0)
             {
