@@ -110,7 +110,22 @@ extern "C" __declspec(dllexport) int SLOSCInit(const int nInPort, const int nOut
 	return SLOSC_SUCCESS;
 }
 
+#ifdef _DEBUG
+static std::chrono::time_point<std::chrono::steady_clock> tpLastNoPacketLog;
+static int nPacketCount = 0;
+#endif
+
 void rxcb(const char* cpAddress, const char* sType, const void** ppParmaters) {
+#ifdef _DEBUG
+	if (std::chrono::steady_clock::now() > tpLastNoPacketLog + std::chrono::milliseconds(1000)) {
+		std::cout << "Packets since last log: " << nPacketCount << std::endl;
+		
+		tpLastNoPacketLog = std::chrono::steady_clock::now();
+		nPacketCount = 0;
+	}
+	nPacketCount++;
+#endif
+
 	std::string sAddress(cpAddress);
 	{
 		auto itWeightString = mapXrFBWeightStrings.find(sAddress);
