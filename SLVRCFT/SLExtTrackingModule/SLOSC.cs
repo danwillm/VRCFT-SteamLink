@@ -87,7 +87,7 @@ namespace SLExtTrackingModule
     internal static class SLOSC
     {
         [DllImport(_sDLLFilePath, CallingConvention = CallingConvention.Cdecl)]
-        private extern static unsafe int SLOSCInit(string sAddress, int nInPort, int nOutPort);
+        private extern static unsafe int SLOSCInit(int nInPort, int nOutPort);
 
         [DllImport(_sDLLFilePath, CallingConvention = CallingConvention.Cdecl)]
         private extern static unsafe int SLOSCPollNext(SLOSCPacket* pPacket);
@@ -95,9 +95,9 @@ namespace SLExtTrackingModule
         [DllImport(_sDLLFilePath, CallingConvention = CallingConvention.Cdecl)]
         private extern static unsafe int SLOSCClose();
 
-        public static int Init(string sAddress, int nInPort, int nOutPort)
+        public static int Init(int nInPort, int nOutPort)
         {
-            return SLOSCInit(sAddress, nInPort, nOutPort);
+            return SLOSCInit(nInPort, nOutPort);
         }
 
         public static int PollNext(ref SLOSCPacket packet)

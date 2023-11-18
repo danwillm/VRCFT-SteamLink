@@ -19,7 +19,7 @@ namespace SLExtTrackingModule
             var stream = GetType().Assembly.GetManifestResourceStream("SLExtTrackingModule.Assets.steamlink.png");
             ModuleInformation.StaticImages = stream != null ? new List<Stream> { stream } : ModuleInformation.StaticImages;
 
-            int nSLOSCInitErr = SLOSC.Init("127.0.0.1", 9015, 9016);
+            int nSLOSCInitErr = SLOSC.Init(9015, 9016);
             if (nSLOSCInitErr != 0)
             {
                 Logger.LogError("SLExtTrackingModule::Initialize: Failed to initialize SLOSC: {nSLOSCInitErr}", nSLOSCInitErr);
@@ -84,8 +84,6 @@ namespace SLExtTrackingModule
 
         public override void Update()
         {
-            Thread.Sleep(2);
-
             int nSLOSCPollErr = SLOSC.PollNext(ref _currentPacket);
             if (nSLOSCPollErr != 0)
             {

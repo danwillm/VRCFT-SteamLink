@@ -90,18 +90,17 @@ static miniosc* osc = nullptr;
 bool bHasNewData = false;
 SLOSCPacket nextPacket = {};
 
-extern "C" __declspec(dllexport) int SLOSCInit(const char* sAddress, const int nInPort, const int nOutPort) {
+extern "C" __declspec(dllexport) int SLOSCInit(const int nInPort, const int nOutPort) {
 #ifdef _DEBUG
 	AllocConsole();
 
 	freopen("CONOUT$", "w", stdout);
 #endif
 
-	std::cout << "Address: " << std::string(sAddress) << std::endl;
 	std::cout << "In Port: " << nInPort << " Out Port: " << nOutPort << std::endl;
 
 	int nOscErr = 0;
-	osc = minioscInit(nInPort, nOutPort, sAddress, &nOscErr);
+	osc = minioscInit(nInPort, nOutPort, nullptr, &nOscErr);
 
 	if (nOscErr != 0) {
 		std::cout << "miniosc error: " << nOscErr << std::endl;
