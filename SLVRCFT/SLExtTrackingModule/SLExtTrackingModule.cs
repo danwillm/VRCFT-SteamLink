@@ -5,6 +5,7 @@ using VRCFaceTracking;
 using VRCFaceTracking.Core.Params.Expressions;
 using static VRCFaceTracking.Core.Params.Expressions.UnifiedExpressions;
 using static SLExtTrackingModule.XrFBWeights;
+using VRCFaceTracking.Core.Params.Data;
 
 namespace SLExtTrackingModule
 {
@@ -72,20 +73,28 @@ namespace SLExtTrackingModule
         }
         private static unsafe void UpdateFaceTracking(ref SLOSCPacket packet)
         {
-            foreach (KeyValuePair<XrFBWeights, List<UnifiedExpressions>> entry in mapDirectXRFBUnifiedExpressions)
-            {
-                int nWeightIndex = (int)entry.Key;
-                foreach (UnifiedExpressions unifiedExpression in entry.Value)
+            ref UnifiedExpressionShape[] shapes = ref UnifiedTracking.Data.Shapes;
+            
+            fixed(float* weights = packet.vWeights) {
+                foreach (KeyValuePair<XrFBWeights, List<UnifiedExpressions>> entry in mapDirectXRFBUnifiedExpressions)
                 {
-                    UnifiedTracking.Data.Shapes[(int)unifiedExpression].Weight = packet.vWeights[nWeightIndex];
+                    int nWeightIndex = (int)entry.Key;
+                    foreach (UnifiedExpressions unifiedExpression in entry.Value)
+                    {
+                        shapes[(int)unifiedExpression].Weight = weights[nWeightIndex];
+                    }
                 }
+
+                shapes[(int)MouthUpperUpLeft].Weight = Math.Max(0f, shapes[(int)MouthUpperUpLeft].Weight - shapes[(int)NoseSneerLeft].Weight);
+                shapes[(int)MouthUpperUpRight].Weight = Math.Max(0f, shapes[(int)MouthUpperUpRight].Weight - shapes[(int)NoseSneerRight].Weight);
+                shapes[(int)MouthUpperDeepenLeft].Weight = Math.Max(0f, shapes[(int)MouthUpperUpLeft].Weight - shapes[(int)NoseSneerLeft].Weight);
+                shapes[(int)MouthUpperUpRight].Weight = Math.Max(0f, shapes[(int)MouthUpperUpRight].Weight - shapes[(int)NoseSneerRight].Weight);
+                shapes[(int)MouthUpperDeepenRight].Weight = Math.Max(0f, shapes[(int)MouthUpperUpRight].Weight - shapes[(int)NoseSneerRight].Weight);
+
+                shapes[(int)LipSuckUpperLeft].Weight = Math.Min(1f - (float)Math.Pow(weights[(int)UpperLipRaiserL], 1f / 6f), weights[(int)LipSuckLT]);
+                shapes[(int)LipSuckUpperRight].Weight = Math.Min(1f - (float)Math.Pow(weights[(int)UpperLipRaiserR], 1f / 6f), weights[(int)LipSuckRT]);
             }
 
-            UnifiedTracking.Data.Shapes[(int)MouthUpperUpLeft].Weight = Math.Max(0, UnifiedTracking.Data.Shapes[(int)MouthUpperUpLeft].Weight - UnifiedTracking.Data.Shapes[(int)NoseSneerLeft].Weight);
-            UnifiedTracking.Data.Shapes[(int)MouthUpperUpRight].Weight = Math.Max(0, UnifiedTracking.Data.Shapes[(int)MouthUpperUpRight].Weight - UnifiedTracking.Data.Shapes[(int)NoseSneerRight].Weight);
-            UnifiedTracking.Data.Shapes[(int)MouthUpperDeepenLeft].Weight = Math.Max(0, UnifiedTracking.Data.Shapes[(int)MouthUpperUpLeft].Weight - UnifiedTracking.Data.Shapes[(int)NoseSneerLeft].Weight);
-            UnifiedTracking.Data.Shapes[(int)MouthUpperUpRight].Weight = Math.Max(0, UnifiedTracking.Data.Shapes[(int)MouthUpperUpRight].Weight - UnifiedTracking.Data.Shapes[(int)NoseSneerRight].Weight);
-            UnifiedTracking.Data.Shapes[(int)MouthUpperDeepenRight].Weight = Math.Max(0, UnifiedTracking.Data.Shapes[(int)MouthUpperUpRight].Weight - UnifiedTracking.Data.Shapes[(int)NoseSneerRight].Weight);
         }
 
         public override void Update()
