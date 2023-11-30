@@ -85,6 +85,7 @@ namespace SLExtTrackingModule
                     }
                 }
 
+                //conversions from https://github.com/regzo2/VRCFaceTracking-QuestProOpenXR
                 shapes[(int)MouthUpperUpLeft].Weight = Math.Max(0f, shapes[(int)MouthUpperUpLeft].Weight - shapes[(int)NoseSneerLeft].Weight);
                 shapes[(int)MouthUpperUpRight].Weight = Math.Max(0f, shapes[(int)MouthUpperUpRight].Weight - shapes[(int)NoseSneerRight].Weight);
                 shapes[(int)MouthUpperDeepenLeft].Weight = Math.Max(0f, shapes[(int)MouthUpperUpLeft].Weight - shapes[(int)NoseSneerLeft].Weight);
