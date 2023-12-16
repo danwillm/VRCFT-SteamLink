@@ -64,6 +64,13 @@ enum EXrFBWeights {
 	UpperLidRaiserR,
 	UpperLipRaiserL,
 	UpperLipRaiserR,
+	ToungeTipInterdental,
+	ToungeTipAlveolar,
+	FrontDorsalPalate,
+	MidDorsalPalate,
+	BackDorsalVelar,
+	ToungeOut,
+	ToungeRetreat,
 	XR_FB_WEIGHTS_MAX,
 };
 

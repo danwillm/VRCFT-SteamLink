@@ -152,8 +152,8 @@ namespace SLExtTrackingModule
                 {LipsToward, new List<UnifiedExpressions>{MouthClosed}},
                 {LipCornerPullerL, new List<UnifiedExpressions>{ MouthCornerPullLeft, MouthCornerSlantLeft} },
                 {LipCornerPullerR, new List<UnifiedExpressions>{ MouthCornerPullRight, MouthCornerSlantRight} },
-                {LipCornerDepressoL, new List<UnifiedExpressions>{ MouthFrownLeft} },
-                {LipCornerDepressoR, new List<UnifiedExpressions>{ MouthFrownRight} },
+                {LipCornerDepressorL, new List<UnifiedExpressions>{ MouthFrownLeft} },
+                {LipCornerDepressorR, new List<UnifiedExpressions>{ MouthFrownRight} },
                 {LowerLipDepressorL, new List<UnifiedExpressions>{ MouthLowerDownLeft} },
                 {LowerLipDepressorR, new List<UnifiedExpressions>{ MouthLowerDownRight} },
                 {UpperLipRaiserL, new List<UnifiedExpressions>{ MouthUpperUpLeft} }, //something odd here
@@ -184,6 +184,9 @@ namespace SLExtTrackingModule
 
                 {NoseWrinklerL, new List<UnifiedExpressions>{NoseSneerLeft} },
                 {NoseWrinklerR, new List<UnifiedExpressions>{NoseSneerRight} },
+
+                {FBToungeOut, new List<UnifiedExpressions>{ TongueOut } },
+                {FBToungeTipAlveolar, new List<UnifiedExpressions>{ TongueCurlUp } }
             };
     }
 }
