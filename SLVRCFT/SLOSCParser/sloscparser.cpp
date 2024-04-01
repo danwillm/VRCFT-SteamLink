@@ -83,13 +83,13 @@ static const std::map<std::string, EXrFBWeights> mapXrFBWeightStrings{
 	{"/sl/xrfb/facew/UpperLidRaiserR", UpperLidRaiserR },
 	{"/sl/xrfb/facew/UpperLipRaiserL", UpperLipRaiserL },
 	{"/sl/xrfb/facew/UpperLipRaiserR", UpperLipRaiserR },
-	{"/sl/xrfb/facew/ToungeTipInterdental", ToungeTipInterdental },
-	{"/sl/xrfb/facew/ToungeTipAlveolar", ToungeTipAlveolar },
+	{"/sl/xrfb/facew/TongueTipInterdental", TongueTipInterdental },
+	{"/sl/xrfb/facew/TongueTipAlveolar", TongueTipAlveolar },
 	{"/sl/xrfb/facew/FrontDorsalPalate", FrontDorsalPalate },
 	{"/sl/xrfb/facew/MidDorsalPalate", MidDorsalPalate },
 	{"/sl/xrfb/facew/BackDorsalVelar", BackDorsalVelar },
-	{"/sl/xrfb/facew/ToungeOut", ToungeOut },
-	{"/sl/xrfb/facew/ToungeRetreat", ToungeRetreat },
+	{"/sl/xrfb/facew/TongueOut", TongueOut },
+	{"/sl/xrfb/facew/TongueRetreat", TongueRetreat },
 	{}
 };
 

@@ -100,13 +100,13 @@ OpenXR Face Tracking:
 /sl/xrfb/facew/UpperLipRaiserL
 /sl/xrfb/facew/UpperLipRaiserR
 ---BUNDLE
-/sl/xrfb/facew/ToungeTipInterdental
-/sl/xrfb/facew/ToungeTipAlveolar
+/sl/xrfb/facew/TongueTipInterdental
+/sl/xrfb/facew/TongueTipAlveolar
 /sl/xrfb/facew/FrontDorsalPalate
 /sl/xrfb/facew/MidDorsalPalate
 /sl/xrfb/facew/BackDorsalVelar
-/sl/xrfb/facew/ToungeOut
-/sl/xrfb/facew/ToungeRetreat
+/sl/xrfb/facew/TongueOut
+/sl/xrfb/facew/TongueRetreat
 ```
 
 Addresses may be sent in different bundles. How different addresses are packaged are noted by `---BUNDLE` above.

@@ -185,8 +185,8 @@ namespace SLExtTrackingModule
                 {NoseWrinklerL, new List<UnifiedExpressions>{NoseSneerLeft} },
                 {NoseWrinklerR, new List<UnifiedExpressions>{NoseSneerRight} },
 
-                {FBToungeOut, new List<UnifiedExpressions>{ TongueOut } },
-                {FBToungeTipAlveolar, new List<UnifiedExpressions>{ TongueCurlUp } }
+                {FBTongueOut, new List<UnifiedExpressions>{ TongueOut } },
+                {FBTongueTipAlveolar, new List<UnifiedExpressions>{ TongueCurlUp } }
             };
     }
 }
